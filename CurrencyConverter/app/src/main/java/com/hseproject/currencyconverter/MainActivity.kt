@@ -74,6 +74,7 @@ class MainActivity : AppCompatActivity() {
         currency_from.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, pos: Int, id: Long) {
                 cur_from = parent!!.getItemAtPosition(pos) as String
+                to_amount.setText("")
             }
             override fun onNothingSelected(parent: AdapterView<*>) {
                 // Another interface callback
@@ -85,6 +86,7 @@ class MainActivity : AppCompatActivity() {
         currency_to.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, pos: Int, id: Long) {
                 cur_to = parent!!.getItemAtPosition(pos) as String
+                to_amount.setText("")
             }
             override fun onNothingSelected(parent: AdapterView<*>) {
                 // Another interface callback
@@ -92,7 +94,11 @@ class MainActivity : AppCompatActivity() {
         }
 
         convert.setOnClickListener {
-            var am_from = from_amount.text.toString().toDouble()
+            var am_from_str = from_amount.text.toString()
+            var am_from = 0.0
+            if (am_from_str != "") {
+                am_from = am_from_str.toDouble()
+            }
             var in_rub = am_from*toRub[cur_from]!!
             var in_to = in_rub/toRub[cur_to]!!
             in_to = round(in_to*100)/100
